@@ -93,7 +93,7 @@ func (c *Client) signature(in *signIn) (signature string, authorization string, 
 	canonicalRequest := fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s",
 		in.method,
 		in.uri,
-		in.queryString,
+		"", //in.queryString,
 		canonicalHeaders,
 		signedHeaders,
 		payloadHashStr)
