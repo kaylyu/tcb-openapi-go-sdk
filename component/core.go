@@ -18,9 +18,9 @@ func NewCore(ctx *context.Context, sts *sts.Sts) *Core {
 }
 
 //GET
-func (c *Core) HttpGetJson(path string, params url.Values, headers ...map[string]string) (response string, err error) {
+func (c *Core) HttpGetJson(path string, params url.Values, headers ...map[string]string) (body string, err error) {
 	//附加数据
-	response, err = c.client.HttpGetJson(path, params, headers...)
+	body, err = c.client.HttpGetJson(path, params, headers...)
 	if err != nil {
 		return
 	}
@@ -28,9 +28,9 @@ func (c *Core) HttpGetJson(path string, params url.Values, headers ...map[string
 }
 
 //POST
-func (c *Core) HttpPostJson(path string, request interface{}, headers ...map[string]string) (response string, err error) {
+func (c *Core) HttpPostJson(path string, request interface{}, headers ...map[string]string) (body string, err error) {
 	//附加数据
-	response, err = c.client.HttpPostJson(path, util.JsonEncode(request), headers...)
+	body, err = c.client.HttpPostJson(path, util.JsonEncode(request), headers...)
 	if err != nil {
 		return
 	}

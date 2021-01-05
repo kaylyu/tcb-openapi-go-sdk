@@ -21,14 +21,14 @@ func NewDatabase(context *context.Context, core *component.Core) *Database {
 }
 
 //TODO
-func (d *Database) HttpGetJson(path string, params url.Values, headers ...map[string]string) (out interface{}, err error) {
+func (d *Database) HttpGetJson(path string, params url.Values, headers ...map[string]string) (body string, err error) {
 	//请求
 	return d.core.HttpGetJson(path, params, headers...)
 
 }
 
 //TODO
-func (d *Database) HttpPostJson(path string, request interface{}, headers ...map[string]string) (out interface{}, err error) {
+func (d *Database) HttpPostJson(path string, request interface{}, headers ...map[string]string) (body string, err error) {
 	//请求
 	return d.core.HttpPostJson(path, request, headers...)
 
