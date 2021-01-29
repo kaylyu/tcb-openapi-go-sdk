@@ -36,8 +36,8 @@ func Time() *time.Time {
 	return &t
 }
 
-//获取秒
-func Unix() int64 {
+//获取毫秒
+func Millisecond() int64 {
 	var cstSh, _ = time.LoadLocation("Asia/Shanghai") //  上海
 	return time.Now().In(cstSh).Unix() * 1000
 }

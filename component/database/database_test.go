@@ -62,8 +62,8 @@ func TestInsertDocument(t *testing.T) {
 		"app_id":      "aaaa",
 		"phone":       "123",
 		"jobs":        []string{"技工", "学者"},
-		"_createTime": util.Unix(),
-		"_updateTime": util.Unix(),
+		"_createTime": util.Millisecond(),
+		"_updateTime": util.Millisecond(),
 	}))
 }
 
@@ -74,15 +74,15 @@ func TestInsertDocuments(t *testing.T) {
 			"app_id":      "xxxxx1",
 			"phone":       "123",
 			"jobs":        []string{"技工", "学者"},
-			"_createTime": util.Unix(),
-			"_updateTime": util.Unix(),
+			"_createTime": util.Millisecond(),
+			"_updateTime": util.Millisecond(),
 		},
 		bson.M{
 			"app_id":      "yyyyyy2",
 			"phone":       "1234",
 			"jobs":        []string{"车工", "电工"},
-			"_createTime": util.Unix(),
-			"_updateTime": util.Unix(),
+			"_createTime": util.Millisecond(),
+			"_updateTime": util.Millisecond(),
 		},
 	},
 	))
