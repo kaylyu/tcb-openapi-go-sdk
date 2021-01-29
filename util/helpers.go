@@ -30,6 +30,24 @@ func StrToTime(s string) *time.Time {
 	return &t
 }
 
+//时间字符串转换成时间对象
+func Time() *time.Time {
+	t := time.Now()
+	return &t
+}
+
+//获取秒
+func Unix() int64 {
+	var cstSh, _ = time.LoadLocation("Asia/Shanghai") //  上海
+	return time.Now().In(cstSh).Unix() * 1000
+}
+
+//格式化时间
+func Date() (v string) {
+	var cstSh, _ = time.LoadLocation("Asia/Shanghai") //  上海
+	return time.Now().Local().In(cstSh).Format("2006-01-02")
+}
+
 //转JSON
 func JsonEncode(v interface{}) string {
 	if v == nil {

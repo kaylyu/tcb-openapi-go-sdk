@@ -36,3 +36,13 @@ func (c *Core) HttpPostJson(path string, request interface{}, headers ...map[str
 	}
 	return
 }
+
+//PATCH
+func (c *Core) HttpPatchJson(path string, request interface{}, headers ...map[string]string) (body string, err error) {
+	//附加数据
+	body, err = c.client.HttpPatchJson(path, util.JsonEncode(request), headers...)
+	if err != nil {
+		return
+	}
+	return
+}
