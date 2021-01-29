@@ -2,7 +2,7 @@
 
 [Cloudbase Open API](https://docs.cloudbase.net/api-reference/openapi/introduction.html#liao-jie-qing-qiu-jie-gou) development sdk written in Golang
 
-###快速开始
+### 快速开始
 ```go
 import github.com/kaylyu/tcb-openapi-go-sdk
 ```
@@ -50,8 +50,8 @@ fmt.Println(tcb.GetFunction().Invoke("test_func", map[string]interface{}{
 - 云函数
 - 文件存储
 
-### 不支持
-- 数据库
+### 部分支持
+- 数据库 [示例](https://github.com/kaylyu/tcb-openapi-go-sdk/blob/master/component/database/database_test.go)
 
 ### License
 MIT
