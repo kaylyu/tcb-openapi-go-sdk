@@ -89,6 +89,8 @@ func (c *Sts) GetFederationToken() (response *v20180813.GetFederationTokenRespon
 	if c.Debug {
 		c.logger.Debugf("res cache:%v\n", string(res.([]uint8)))
 	}
+	//解析
+	err = util.JsonDecode(string(res.([]uint8)), response)
 	//获取缓存中的数据为空
 	if response.Response == nil {
 		//获取缓存失败，重新获取数据
@@ -96,8 +98,6 @@ func (c *Sts) GetFederationToken() (response *v20180813.GetFederationTokenRespon
 		//直接返回
 		return
 	}
-	//解析
-	err = util.JsonDecode(string(res.([]uint8)), response)
 	return
 
 }
