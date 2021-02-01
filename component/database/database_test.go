@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gogf/gf/database/gredis"
 	"github.com/kaylyu/tcb-openapi-go-sdk"
+	"github.com/kaylyu/tcb-openapi-go-sdk/component/database/query"
 	"github.com/kaylyu/tcb-openapi-go-sdk/config"
 	"github.com/kaylyu/tcb-openapi-go-sdk/sts"
 	"github.com/kaylyu/tcb-openapi-go-sdk/util"
@@ -45,19 +46,21 @@ func init() {
 
 //单文档插入
 func TestGetDocument(t *testing.T) {
-	//插入记录
-	fmt.Println(client.GetDatabase().GetDocument("users", "1d7219966013df210000000c00ba0e33", "10", "", nil, nil))
+	fmt.Println(client.GetDatabase().GetDocument("users", "ba5028c16017631a000000186b9e2dd7", 10, 0, nil, nil))
 }
 
 //单文档更新
 func TestUpdateDocument(t *testing.T) {
-	//插入记录
-	fmt.Println(client.GetDatabase().UpdateDocument("users", "1d7219966013df210000000d04060cf8", bson.M{"app_id": "kkkkkkk"}, ""))
+	fmt.Println(client.GetDatabase().UpdateDocument("users", "ba5028c16017631a000000186b9e2dd7", bson.M{"app_id": "ffff"}, ""))
+}
+
+//单文档替换更新
+func TestSetDocument(t *testing.T) {
+	fmt.Println(client.GetDatabase().SetDocument("users", "12333333333", bson.M{"app_id": "ffff"}, ""))
 }
 
 //单文档插入
 func TestInsertDocument(t *testing.T) {
-	//插入记录
 	fmt.Println(client.GetDatabase().InsertDocument("users", "124444", bson.M{
 		"app_id":      "aaaa",
 		"phone":       "123",
@@ -65,6 +68,11 @@ func TestInsertDocument(t *testing.T) {
 		"_createTime": util.Millisecond(),
 		"_updateTime": util.Millisecond(),
 	}))
+}
+
+//单文档删除
+func TestDeleteDocument(t *testing.T) {
+	fmt.Println(client.GetDatabase().DeleteDocument("users", "12333333333", ""))
 }
 
 //批量插入文档
@@ -88,23 +96,62 @@ func TestInsertDocuments(t *testing.T) {
 	))
 }
 
-func TestFunction(t *testing.T) {
+func TestFind(t *testing.T) {
+	qa := query.NewQuery()
+	qa.Regex("app_id", "f")
+	qa.Regex("phone", "1")
+	fmt.Println(client.GetDatabase().Find("users", qa, 10, 0, bson.M{}, bson.M{}))
+}
 
-	//查询数据，有两种查询模式
-	//1、精确查找
-	//fmt.Println(client.GetDatabase().HttpPostJson(fmt.Sprintf("/api/v2/envs/%s/databases/%s/documents:find?limit=100&skip=&fields=&sort=%s&transactionId=", envId, "users", util.JsonEncode(bson.M{"_id":-1})), bson.M{
-	//	"query": util.JsonEncode(bson.M{
-	//		"app_id": "xx",
-	//	}),
-	//}))
-	//2、查询指令方式查找，参考文档：https://docs.cloudbase.net/database/query.html#cha-xun-zhi-ling
-	//参考js https://github.com/TencentCloudBase/tcb-js-sdk-database/blob/master/src/commands/query.ts
-	//fmt.Println(client.GetDatabase().HttpPostJson("/api/v2/envs/tcb-go-xxx/databases/test/documents:find?limit=100&skip=&fields=&sort=&transactionId=", bson.M{
-	//	"query": util.JsonEncode(bson.M{
-	//		//"app_id": bson.M{"$eq":"xx"},//精准匹配
-	//		"app_id": bson.M{"$regex": "x"}, //模糊匹配
-	//		//"jobs": bson.M{"$in":[]string{"车工"}},//过滤数组
-	//		//"jobs": bson.M{"$regex": "车"}, //模糊匹配
-	//	}),
-	//}))
+func TestCount(t *testing.T) {
+	qa := query.NewQuery()
+	qa.Regex("app_id", "f")
+	qa.Regex("phone", "1")
+	fmt.Println(client.GetDatabase().Count("users", qa))
+}
+
+func TestUpdateOne(t *testing.T) {
+	qa := query.NewQuery()
+	qa.Regex("app_id", "f")
+	qa.Regex("phone", "1")
+
+	fmt.Println(client.GetDatabase().UpdateOne("users", qa, bson.M{
+		"app_id": "12kkk",
+	}))
+}
+
+func TestUpdateMany(t *testing.T) {
+	qa := query.NewQuery()
+	qa.Regex("phone", "1")
+
+	fmt.Println(client.GetDatabase().UpdateMany("users", qa, bson.M{
+		"app_id": "66666",
+	}))
+}
+
+func TestDeleteOne(t *testing.T) {
+	qa := query.NewQuery()
+	qa.Regex("phone", "1")
+
+	fmt.Println(client.GetDatabase().DeleteOne("users", qa))
+}
+
+func TestDeleteMany(t *testing.T) {
+	qa := query.NewQuery()
+	qa.Regex("phone", "1")
+
+	fmt.Println(client.GetDatabase().DeleteMany("users", qa))
+}
+
+func TestTransaction(t *testing.T) {
+	fmt.Println(client.GetDatabase().Transaction("users"))
+}
+
+//测试AND查询条件
+//更多请查看 https://docs.mongodb.com/manual/reference/operator/query-comparison/
+func TestAnd(t *testing.T) {
+	//{"query":"{\"$and\":[{\"app_id\":{\"$regex\":\"1\"}},{\"phone\":{\"$regex\":\"2\"}}]}"}
+	qa := query.NewQuery()
+	qa.Magic("$and", []bson.M{bson.M{"app_id": bson.M{"$regex": "1"}}, bson.M{"phone": bson.M{"$regex": "2"}}})
+	fmt.Println(client.GetDatabase().Find("users", qa, 10, 0, bson.M{}, bson.M{}))
 }

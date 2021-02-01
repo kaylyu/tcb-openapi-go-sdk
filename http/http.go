@@ -164,3 +164,11 @@ func (c *Client) HttpPatchJson(path string, params string, headers ...map[string
 
 	return
 }
+
+//DELETE
+func (c *Client) HttpDeleteJson(path string, params string, headers ...map[string]string) (body string, err error) {
+	//请求
+	body, err = c.request("DELETE", path, params, headers...)
+
+	return
+}

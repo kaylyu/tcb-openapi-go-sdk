@@ -46,3 +46,13 @@ func (c *Core) HttpPatchJson(path string, request interface{}, headers ...map[st
 	}
 	return
 }
+
+//DELETE
+func (c *Core) HttpDeleteJson(path string, request interface{}, headers ...map[string]string) (body string, err error) {
+	//附加数据
+	body, err = c.client.HttpDeleteJson(path, util.JsonEncode(request), headers...)
+	if err != nil {
+		return
+	}
+	return
+}
