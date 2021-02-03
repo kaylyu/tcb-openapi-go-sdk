@@ -63,7 +63,7 @@ func (d *Database) UpdateDocument(table, docId string, data bson.M, transactionI
 //https://docs.cloudbase.net/api-reference/openapi/database.html#setdocument
 func (d *Database) SetDocument(table, docId string, data bson.M, transactionId ...string) (body string, err error) {
 	//请求参数
-	path := fmt.Sprintf("/api/v2/envs/%s/databases/%s/documents/{%s}?transactionId=%s", d.context.Config.EnvId, table, docId, d.appendTransActionId(transactionId...))
+	path := fmt.Sprintf("/api/v2/envs/%s/databases/%s/documents/%s?transactionId=%s", d.context.Config.EnvId, table, docId, d.appendTransActionId(transactionId...))
 
 	return d.core.HttpPostJson(path, bson.M{
 		"data": util.JsonEncode(data),
@@ -74,7 +74,7 @@ func (d *Database) SetDocument(table, docId string, data bson.M, transactionId .
 //https://docs.cloudbase.net/api-reference/openapi/database.html#insertdocument
 func (d *Database) InsertDocument(table, docId string, data bson.M, transactionId ...string) (body string, err error) {
 	//请求参数
-	path := fmt.Sprintf("/api/v2/envs/%s/databases/%s/documents/{%s}?transactionId=%s", d.context.Config.EnvId, table, docId, d.appendTransActionId(transactionId...))
+	path := fmt.Sprintf("/api/v2/envs/%s/databases/%s/documents/%s?transactionId=%s", d.context.Config.EnvId, table, docId, d.appendTransActionId(transactionId...))
 
 	return d.core.HttpPostJson(path, bson.M{
 		"data": util.JsonEncode(data),
@@ -85,7 +85,7 @@ func (d *Database) InsertDocument(table, docId string, data bson.M, transactionI
 //https://docs.cloudbase.net/api-reference/openapi/database.html#deletedocument
 func (d *Database) DeleteDocument(table, docId string, transactionId ...string) (body string, err error) {
 	//请求参数
-	path := fmt.Sprintf("/api/v2/envs/%s/databases/%s/documents/{%s}?transactionId=%s", d.context.Config.EnvId, table, docId, d.appendTransActionId(transactionId...))
+	path := fmt.Sprintf("/api/v2/envs/%s/databases/%s/documents/%s?transactionId=%s", d.context.Config.EnvId, table, docId, d.appendTransActionId(transactionId...))
 
 	return d.core.HttpDeleteJson(path, bson.M{})
 }
