@@ -38,7 +38,7 @@ func NewTcb(config *config.Config) *Tcb {
 		},
 	}
 	//cam
-	client := sts.NewStsClient(&config.StsConfig, gredis.New(config.RedisConfig), ctx.Logger)
+	client := sts.NewStsClient(&config.StsConfig, gredis.New(&config.RedisConfig), ctx.Logger)
 	return &Tcb{ctx, component.NewCore(ctx, client)}
 }
 

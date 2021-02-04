@@ -88,7 +88,7 @@ func (c *Client) request(method string, reqUrl string, reqBody string, headers .
 	if c.ctx.Config.Debug && c.ctx.Logger != nil {
 		transport.Logger = c.ctx.Logger
 	}
-	req.SetTimeOut(timeout)
+	req.Timeout(timeout)
 	req.Transport = transport
 
 	//获取CAM临时TOKEN
