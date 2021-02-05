@@ -18,7 +18,7 @@ import (
 Cloudbase Open API 服务地址
 https://docs.cloudbase.net/api-reference/openapi/introduction.html
 */
-var TcbAPI = "https://ap-guangzhou.tcb-api.tencentcloudapi.com"
+var TcbAPI = "https://tcb-api.tencentcloudapi.com"
 
 //
 type Client struct {
