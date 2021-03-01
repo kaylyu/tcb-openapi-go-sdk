@@ -64,7 +64,12 @@ func (c *Client) SetTimeStampHeader(timeStampHeader string) {
 
 //请求
 func (c *Client) request(method string, reqUrl string, reqBody string, headers ...map[string]string) (body string, err error) {
-	uri, err := url.Parse(TcbAPI + reqUrl)
+	//校验地域
+	baseApi := TcbAPI
+	if len(c.ctx.Config.Region) > 0 {
+		baseApi = fmt.Sprintf("https://%s.tcb-api.tencentcloudapi.com", c.ctx.Config.Region)
+	}
+	uri, err := url.Parse(baseApi + reqUrl)
 	if err != nil {
 		return
 	}

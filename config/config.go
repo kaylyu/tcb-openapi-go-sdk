@@ -10,6 +10,7 @@ import (
 
 type Config struct {
 	EnvId       string        //TCB 环境 ID
+	Region      string        //TCB 环境所属地域
 	Timeout     time.Duration //请求超时设置
 	LogPrefix   string        //日志前缀
 	Debug       bool          //debug
