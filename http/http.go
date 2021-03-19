@@ -96,14 +96,6 @@ func (c *Client) request(method string, reqUrl string, reqBody string, headers .
 	req.Timeout(timeout)
 	req.Transport = transport
 
-	//获取CAM临时TOKEN
-	rsp, err := c.sts.GetFederationToken()
-	if err != nil {
-		return
-	}
-	//临时证书
-	credentials := rsp.Response.Credentials
-
 	//签名参数
 	signIn := &signIn{
 		host:        "api.tcloudbase.com",
@@ -113,15 +105,29 @@ func (c *Client) request(method string, reqUrl string, reqBody string, headers .
 		queryString: uri.RawQuery,
 		payload:     []byte(""),
 		now:         time.Now(),
-		secretId:    *credentials.TmpSecretId,
-		secretKey:   *credentials.TmpSecretKey,
+		secretId:    c.ctx.Config.SecretId,
+		secretKey:   c.ctx.Config.SecretKey,
 		debug:       c.ctx.Config.Debug,
+	}
+	//CAM临时TOKEN
+	if len(signIn.secretId) == 0 && len(signIn.secretKey) == 0 {
+		//获取CAM临时TOKEN
+		rsp, err := c.sts.GetFederationToken()
+		if err != nil {
+			return "", err
+		}
+		//临时证书
+		credentials := rsp.Response.Credentials
+		signIn.secretId = *credentials.TmpSecretId
+		signIn.secretKey = *credentials.TmpSecretKey
+		req.SetHeader(c.sessionTokenHeader, *credentials.Token)
 	}
 	//签名
 	_, authorization, err := c.signature(signIn)
 	if err != nil {
 		return
 	}
+
 	req.SetHeader("Accept", "*/*")
 	req.SetHeader("Accept-Charset", "utf-8")
 	req.SetHeader("Content-Type", signIn.contentType)
@@ -130,7 +136,7 @@ func (c *Client) request(method string, reqUrl string, reqBody string, headers .
 	} else {
 		req.SetHeader(c.authorizationHeader, authorization)
 	}
-	req.SetHeader(c.sessionTokenHeader, *credentials.Token)
+
 	req.SetHeader(c.timeStampHeader, gconv.String(signIn.now.Unix()))
 	if len(headers) > 0 {
 		for k, v := range headers[0] {

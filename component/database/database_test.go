@@ -23,9 +23,12 @@ func init() {
 	//小程序handle
 	client = tcb.NewTcb(&config.Config{
 		EnvId:     envId,
+		TcbRegion: viper.GetString("tcb_region"),
 		Timeout:   time.Duration(15) * time.Second,
 		LogPrefix: viper.GetString("sts_name"),
 		Debug:     viper.GetBool("tcb_open_api_debug"),
+		SecretId:  viper.GetString("sts_app_id"),
+		SecretKey: viper.GetString("sts_secret"),
 		StsConfig: sts.Config{
 			SecretId:        viper.GetString("sts_app_id"),
 			SecretKey:       viper.GetString("sts_secret"),
@@ -46,12 +49,12 @@ func init() {
 
 //单文档插入
 func TestGetDocument(t *testing.T) {
-	fmt.Println(client.GetDatabase().GetDocument("users", "ba5028c16017631a000000186b9e2dd7", 10, 0, nil, nil))
+	fmt.Println(client.GetDatabase().GetDocument("users", "124444", 10, 0, nil, nil))
 }
 
 //单文档更新
 func TestUpdateDocument(t *testing.T) {
-	fmt.Println(client.GetDatabase().UpdateDocument("users", "ba5028c16017631a000000186b9e2dd7", bson.M{"app_id": "ffff"}, ""))
+	fmt.Println(client.GetDatabase().UpdateDocument("users", "124444", bson.M{"app_id": "ffff"}, ""))
 }
 
 //单文档替换更新

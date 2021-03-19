@@ -9,12 +9,16 @@ import (
 )
 
 type Config struct {
-	EnvId       string        //TCB 环境 ID
-	TcbRegion   string        //TCB 环境所属地域
-	Timeout     time.Duration //请求超时设置
-	LogPrefix   string        //日志前缀
-	Debug       bool          //debug
-	StsConfig   sts.Config    //cam config
+	EnvId     string        //TCB 环境 ID
+	TcbRegion string        //TCB 环境所属地域
+	Timeout   time.Duration //请求超时设置
+	LogPrefix string        //日志前缀
+	Debug     bool          //debug
+	SecretId  string        //访问管理密钥ID
+	SecretKey string        //访问管理密钥KEY
+	//Deprecated
+	StsConfig sts.Config //cam config
+	//Deprecated
 	RedisConfig gredis.Config //redis config
 }
 
