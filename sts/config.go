@@ -1,6 +1,8 @@
 package sts
 
 //https://cloud.tencent.com/document/product/598/33416
+//使用子账户模式，请先通过主账户授权开通 QcloudTCBFullAccess(云开发全读写访问), QcloudAccessForTCBRole(云开发对云资源的访问权限)
+//https://cloud.tencent.com/document/product/598/36256
 type Config struct {
 	SecretId        string //访问管理密钥ID
 	SecretKey       string //访问管理密钥KEY
