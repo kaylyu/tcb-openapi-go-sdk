@@ -9,7 +9,7 @@ func (q *Query) Mod(key string, m, result int64) *Query {
 }
 
 //模糊匹配
-func (q *Query) Regex(key string, value string) *Query {
+func (q *Query) Regex(key string, value interface{}) *Query {
 	q.query[key] = bson.M{"$regex": value}
 	return q
 }
