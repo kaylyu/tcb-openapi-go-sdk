@@ -9,7 +9,7 @@ import (
 	"github.com/kaylyu/tcb-openapi-go-sdk/sts"
 	"github.com/kaylyu/tcb-openapi-go-sdk/util"
 	"github.com/spf13/viper"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
 	"testing"
 	"time"
 )

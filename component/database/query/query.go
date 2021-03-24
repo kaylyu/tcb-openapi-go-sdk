@@ -2,7 +2,7 @@ package query
 
 import (
 	"github.com/kaylyu/tcb-openapi-go-sdk/util"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 //查询条件

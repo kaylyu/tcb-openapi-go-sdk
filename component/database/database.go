@@ -7,7 +7,7 @@ import (
 	"github.com/kaylyu/tcb-openapi-go-sdk/component/database/query"
 	"github.com/kaylyu/tcb-openapi-go-sdk/context"
 	"github.com/kaylyu/tcb-openapi-go-sdk/util"
-	"gopkg.in/mgo.v2/bson"
+	"go.mongodb.org/mongo-driver/bson"
 	"net/url"
 )
 

@@ -1,6 +1,6 @@
 package query
 
-import "gopkg.in/mgo.v2/bson"
+import "go.mongodb.org/mongo-driver/bson"
 
 //等于
 func (q *Query) Eq(key string, value interface{}) *Query {

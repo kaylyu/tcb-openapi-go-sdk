@@ -1,6 +1,6 @@
 package query
 
-import "gopkg.in/mgo.v2/bson"
+import "go.mongodb.org/mongo-driver/bson"
 
 //取模运算
 func (q *Query) Mod(key string, m, result int64) *Query {
