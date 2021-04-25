@@ -95,7 +95,7 @@ func (n *NumberLong) UnmarshalJSON(data []byte) (err error) {
 type ISODate time.Time
 
 func (t ISODate) MarshalJSON() ([]byte, error) {
-	stamp := fmt.Sprintf("%d", time.Time(t).UnixNano()/1e6)
+	stamp := fmt.Sprintf(`{"$date":{"$numberLong":"%d"}}`, time.Time(t).UnixNano()/1e6)
 	return []byte(stamp), nil
 }
 
@@ -121,4 +121,26 @@ func (t *ISODate) UnmarshalJSON(data []byte) (err error) {
 
 func (t ISODate) Time() time.Time {
 	return time.Time(t)
+}
+
+type ServerDate struct {
+	Offset int64 `json:"offset"`
+}
+
+func (t *ServerDate) MarshalJSON() ([]byte, error) {
+	wrapper := struct {
+		TcbServerDate ServerDate `json:"$tcb_server_date"`
+	}{*t}
+	return json.Marshal(wrapper)
+}
+
+func (t ServerDate) Time() time.Time {
+	return time.Now().Add(time.Duration(t.Offset * 1e6))
+}
+
+type Timestamp ISODate
+
+func (t Timestamp) MarshalJSON() ([]byte, error) {
+	stamp := fmt.Sprintf("%d", time.Time(t).UnixNano()/1e6)
+	return []byte(stamp), nil
 }
