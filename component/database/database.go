@@ -188,7 +188,7 @@ func (d *Database) Transaction(table string) (body string, err error) {
 //https://docs.cloudbase.net/api-reference/openapi/database.html#transaction
 func (d *Database) CommitTransaction(table string, transactionId string) (body string, err error) {
 	//请求参数
-	path := fmt.Sprintf("/api/v2/envs/%s/databases/%s/%s:commit", d.context.Config.EnvId, table, transactionId)
+	path := fmt.Sprintf("/api/v2/envs/%s/databases/%s/transaction/%s:commit", d.context.Config.EnvId, table, transactionId)
 
 	return d.core.HttpPostJson(path, bson.M{})
 }
@@ -197,7 +197,7 @@ func (d *Database) CommitTransaction(table string, transactionId string) (body s
 //https://docs.cloudbase.net/api-reference/openapi/database.html#transaction
 func (d *Database) RollbackTransaction(table string, transactionId string) (body string, err error) {
 	//请求参数
-	path := fmt.Sprintf("/api/v2/envs/%s/databases/%s/%s:rollback", d.context.Config.EnvId, table, transactionId)
+	path := fmt.Sprintf("/api/v2/envs/%s/databases/%s/transaction/%s:rollback", d.context.Config.EnvId, table, transactionId)
 
 	return d.core.HttpPostJson(path, bson.M{})
 }
